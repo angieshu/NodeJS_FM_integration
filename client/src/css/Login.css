@@ -1,0 +1,67 @@
+html, body {
+	/* height: 100%; */
+	padding: 0;
+	margin: 0;
+	background-color: #37474F;
+	font-family: Helvetica, "Helvetica Neue", sans-serif;
+}
+
+.Login {
+	height: 100%;
+}
+
+.login-form {
+	width: 28em;
+	height: 26em;
+	background-color: #E0E0E0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+	text-align: center;
+	padding-top: 5em;
+	border-radius: .2em;
+	-moz-border-radius: .2em;
+	-webkit-border-radius: .2em;
+	box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.2), 0 6px 20px 2px rgba(0, 0, 0, 0.19);
+	/* box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19); */
+}
+
+.error-msg {
+	color: red;
+	font-size: 12px;
+}
+
+.btn {
+	margin-top: 6em;
+}
+
+.btn-onerror {
+	margin-top: 3.45em;
+}
+
+.btn, .btn-onerror{
+	background-color:#0097A7;
+	-moz-border-radius:42px;
+	-webkit-border-radius:42px;
+	border-radius:42px;
+	display:inline-block;
+	/* cursor:pointer; */
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:15px 65px;
+	text-decoration:none;
+}
+.btn:hover, .btn-onerror:hover{
+	background-color:#00838f;
+}
+.btn:active, .btn-onerror:active{
+	position:relative;
+	top:1px;
+}
+
+.btn:focus, .btn-onerror:focus{
+	outline: 0;
+}
