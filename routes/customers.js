@@ -27,7 +27,7 @@ router.get('/', (req, res, next) => {
 	axios.get(`${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}`, JSON.parse(localStorage.getItem('axios_token')))
 			 .then(data => data.data)
 			 .then(data => res.json(data))
-			 .catch(e => console.log(e));
+			 .catch(e => res.json({error: "Error when fetching customers"}));
 			 // .catch(e => res.json({error: "Error occured."}));
 });
 

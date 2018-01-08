@@ -27,7 +27,7 @@ router.get('/', (req, res, next) => {
 			 .then(data => data.data)
 			 // .then(data => { console.log(data) })
 			 .then(data => res.json(data))
-			 .catch(e => console.log(e));
+			 .catch(e => res.json({error: "Error when fetching media."}));
 });
 
 module.exports = router;

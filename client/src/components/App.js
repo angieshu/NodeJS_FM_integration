@@ -1,33 +1,73 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+
 import '../css/App.css';
 
+import Header from './Header';
+
+import rightArrow from '../img/right-arrow.png';
+import menu from '../img/menu.png';
+
 class App extends Component {
-	state = { customers: [] }
+	state = {
+		customers: [],
+		openPopover: false
+	}
+
+	componentWillMount() {
+		document.body.style.backgroundColor = `#E0E0E0`;
+	}
 
 	componentDidMount() {
-		console.log('in the app');
 		fetch('/customers')
 			.then(res => res.json())
-			.then(customers => this.setState({ customers: customers.data }));
+			.then(res => {
+				if (res.error) {
+					this.props.history.push('/login');
+				} else {
+					this.setState({ customers: res.data })
+				}
+			});
+	}
+
+	handlePopoverOpen(e) {
+		e.preventDefault();
+		this.setState({
+			openPopover: true,
+			anchorEl: e.currentTarget,
+		});
+	}
+
+	handlePopoverClose() {
+		this.setState({
+			openPopover: false
+		})
 	}
 
 	render() {
 		return (
-			<div className="App">
-				<h3>Customers</h3>
-				{this.state.customers.map(customer =>
-					<Link key={customer.recordId} to={{ pathname: `/customers/${customer.recordId}` }}>
-						<div key={customer.recordId}>{customer.fieldData.CustomerName}</div>
-					</Link>
-				)}
-			</div>
+			<MuiThemeProvider>
+				<div className="App">
+					<Header name="Cutomers" page={1} />
+					<div className="customers-body">
+						{this.state.customers.map(customer =>
+							<Link key={customer.recordId} to={{ pathname: `/customers/${customer.recordId}` }}>
+								<button key={customer.recordId} className="customer">
+									{customer.fieldData.CustomerName}
+									<img src={rightArrow} />
+								</button>
+							</Link>
+						)}
+					</div>
+				</div>
+			</MuiThemeProvider>
 		);
 	}
 }
 
-// body: JSON.stringify({
-// 	"accountName": localStorage.getItem('accountName'),
-// 	"accountPassword": localStorage.getItem('accountName'),
-// })
 export default App;

@@ -24,7 +24,7 @@ router.get('/', (req, res, next) => {
 			 // .then(data => console.log(data))
 			 .then(data => data.data)
 			 .then(data => res.json(data))
-			 .catch(e => console.log(e));
+			 .catch(e => res.json({error: "Error when fetching customer info."}));
 
 });
 

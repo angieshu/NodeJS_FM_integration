@@ -6,10 +6,17 @@ class Media extends Component {
 
 	componentDidMount() {
 		// console.log(encodeURI(`/customers${this.props.match.url}`));
-		fetch(encodeURI(`${this.props.match.url}`))
+		// fetch(encodeURI(`${this.props.match.url}`))
+		fetch(encodeURI(`${this.props.path}`))
 			.then(res => res.json())
-			.then(res => res.data)
-			.then(media => this.setState({ media }));
+			.then(res => {
+				if (res.error) {
+					this.props.history.push('/login');
+				} else {
+					this.setState({ media: res.data });
+				}
+			});
+			// .then(media => this.setState({ media }));
 	}
 
 	render() {

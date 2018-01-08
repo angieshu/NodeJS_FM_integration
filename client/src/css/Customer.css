@@ -1,0 +1,16 @@
+.Customer {
+	margin-top: -1.5em;
+}
+.customerInfo-header {
+	height: 1.5em;
+	width: calc(100% - 15.8em);
+	background-color: #009688;
+	color: #197d73;
+	font-size: 20px;
+	padding: .95em 7.8em 2em 8em;
+	display: flex;
+	direction: row;
+	justify-content: space-between;
+	align-items: baseline;
+	position: fixed;
+}
