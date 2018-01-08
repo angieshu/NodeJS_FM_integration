@@ -53,7 +53,7 @@ class App extends Component {
 		return (
 			<MuiThemeProvider>
 				<div className="App">
-					<Header name="Cutomers" page={1} />
+					<Header name="Customers" page={1} />
 					<div className="customers-body">
 						{this.state.customers.map(customer =>
 							<Link key={customer.recordId} to={{ pathname: `/customers/${customer.recordId}` }}>

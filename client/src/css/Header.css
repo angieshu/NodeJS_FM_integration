@@ -10,7 +10,7 @@
 	direction: row;
 	justify-content: space-between;
 	align-items: baseline;
-	position: fixed;
+	/* position: fixed; */
 }
 
 .menu-btn {

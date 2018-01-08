@@ -1,0 +1,10 @@
+.assetsRoot {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.assetCategory {
+	font-size: 20px;
+	font-weight: 200;
+}
