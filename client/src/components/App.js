@@ -61,6 +61,7 @@ class App extends Component {
 									{customer.fieldData.CustomerName}
 									<img src={rightArrow} />
 								</button>
+								<br /><br />
 							</Link>
 						)}
 					</div>
