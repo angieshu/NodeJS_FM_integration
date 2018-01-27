@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
+
 
 import '../css/App.css';
 
@@ -16,14 +14,17 @@ import menu from '../img/menu.png';
 class App extends Component {
 	state = {
 		customers: [],
-		openPopover: false
 	}
 
 	componentWillMount() {
-		document.body.style.backgroundColor = `#E0E0E0`;
+		document.body.style.backgroundColor = `#FAFAFA`;
 	}
 
 	componentDidMount() {
+		this.getCustomers();
+	}
+
+	getCustomers() {
 		fetch('/customers')
 			.then(res => res.json())
 			.then(res => {
@@ -35,33 +36,26 @@ class App extends Component {
 			});
 	}
 
-	handlePopoverOpen(e) {
-		e.preventDefault();
-		this.setState({
-			openPopover: true,
-			anchorEl: e.currentTarget,
-		});
-	}
 
-	handlePopoverClose() {
-		this.setState({
-			openPopover: false
-		})
+	newCustomerAdded() {
+		this.getCustomers();
 	}
 
 	render() {
 		return (
 			<MuiThemeProvider>
 				<div className="App">
-					<Header name="Customers" page={1} />
+					<Header name="Customers" page={1} newCustomerAdded={this.newCustomerAdded.bind(this)} />
 					<div className="customers-body">
 						{this.state.customers.map(customer =>
 							<Link key={customer.recordId} to={{ pathname: `/customers/${customer.recordId}` }}>
-								<button key={customer.recordId} className="customer">
-									{customer.fieldData.CustomerName}
-									<img src={rightArrow} />
-								</button>
-								<br /><br />
+								<div>
+									<button key={customer.recordId} className="customer">
+										{customer.fieldData.CustomerName}
+										<img src={rightArrow} />
+									</button>
+								</div>
+								<br />
 							</Link>
 						)}
 					</div>

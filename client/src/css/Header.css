@@ -2,15 +2,34 @@
 	margin-top: -1.5em;
 	height: 1.5em;
 	width: calc(100% - 15.8em);
-	background-color: #009688;
-	color: #197d73;
+	background-color: #00B8D4;
+	/* color: #18FFFF; */
+	color: white;
 	font-size: 20px;
+	font-weight: 100;
 	padding: 2em 7.8em 2em 8em;
 	display: flex;
 	direction: row;
 	justify-content: space-between;
 	align-items: baseline;
 	/* position: fixed; */
+}
+
+.menu-links, .menu-pipe {
+	/* color: #18FFFF; */
+	color: white;
+	font-size: 16px;
+	background-color: transparent;
+	border: 0px;
+	font-weight: 100;
+}
+
+.menu-links:hover {
+	color: #00E5FF;
+}
+
+.menu-links:focus {
+	outline: 0;
 }
 
 .menu-btn {

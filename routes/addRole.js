@@ -22,13 +22,22 @@ let LAYOUT		= "Home";
 // router.use(authenticate);
 
 router.get('/', (req, res, next) => {
-	console.log('!!!!');
-	// req.axios.get(`${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}`)
-	axios.get(`${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}?sort=[{"fieldName": "DateCreated", "sortOrder": "descend"}]`, JSON.parse(localStorage.getItem('axios_token')))
+	console.log('addding roooles');
+	let request = JSON.parse(localStorage.getItem('axios_token'));
+	request.method = 'put';
+	request.url = `${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}/${req.recordId}`;
+	request.data = {
+		"data" : {
+			// "roles::role": req.role,
+			"Roles::Role": req.role,
+			// "CustomerName": "changedAlina"
+		}
+	};
+	axios(request)
 			 .then(data => data.data)
 			 .then(data => res.json(data))
-			 .catch(e => res.json({error: "Error when fetching customers"}));
-			 // .catch(e => res.json({error: "Error occured."}));
+			 // .catch(e => res.json("Error adding role."));
+			 .catch(e => { console.log('addRole',e) });
 });
 
 module.exports = router;

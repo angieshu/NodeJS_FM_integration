@@ -2,9 +2,6 @@ const express = require('express');
 const axios = require('axios');
 const localStorage = require('localStorage');
 
-// const authenticate = require('../middleware/authenticate').authenticate;
-
-
 const router = express.Router();
 
 const SERVERURL	= 'https://isolutions.fm';
@@ -13,22 +10,23 @@ const DB		= 'RideAlong';
 
 let LAYOUT		= "Home";
 // let LAYOUT		= "User";
-// router.use(authenticate);
 
 // const SERVERURL	= 'https://itools.isolutions.fm';
 // const DB		= 'TimeTracker';
 
-/* GET users listing. */
 // router.use(authenticate);
 
 router.get('/', (req, res, next) => {
-	console.log('!!!!');
-	// req.axios.get(`${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}`)
-	axios.get(`${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}?sort=[{"fieldName": "DateCreated", "sortOrder": "descend"}]`, JSON.parse(localStorage.getItem('axios_token')))
+	let request = JSON.parse(localStorage.getItem('axios_token'));
+	request.method = 'post';
+	request.url = `${SERVERURL}${APITOKEN}/find/${DB}/${LAYOUT}`;
+	request.data = {
+		'query': [{ "CustomerName": req.customerName }]
+	};
+	axios(request)
 			 .then(data => data.data)
 			 .then(data => res.json(data))
-			 .catch(e => res.json({error: "Error when fetching customers"}));
-			 // .catch(e => res.json({error: "Error occured."}));
+			 .catch(e => res.json({error: "Error finding a customer"}));
 });
 
 module.exports = router;
