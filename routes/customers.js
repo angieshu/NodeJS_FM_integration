@@ -22,7 +22,7 @@ let LAYOUT		= "Home";
 // router.use(authenticate);
 
 router.get('/', (req, res, next) => {
-	console.log('!!!!');
+	// console.log('!!!!');
 	// req.axios.get(`${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}`)
 	axios.get(`${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}?sort=[{"fieldName": "DateCreated", "sortOrder": "descend"}]`, JSON.parse(localStorage.getItem('axios_token')))
 			 .then(data => data.data)

@@ -14,7 +14,6 @@ const DB		= 'RideAlong';
 let LAYOUT		= "Home";
 
 router.get('/', (req, res, next) => {
-	console.log('hetetetetete');
 	// console.log(localStorage.getItem('axios_token'), typeof localStorage.getItem('axios_token'));
 	let request = JSON.parse(localStorage.getItem('axios_token'));
 	// let request = localStorage.getItem('axios_token');
@@ -29,7 +28,7 @@ router.get('/', (req, res, next) => {
 
 	axios(request)
 			 .then(data => {
-				 console.log(data);
+				 // console.log(data);
 				 return data.data})
 			 .then(data => res.json(data))
 			 .catch(e => {console.log('ADD CUSTOMER!!!!', e);});

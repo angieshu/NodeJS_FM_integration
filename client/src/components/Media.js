@@ -13,7 +13,7 @@ class Media extends Component {
 			.then(res => res.json())
 			.then(res => {
 				if (res.error) {
-					this.props.history.push('/login');
+					console.log('NO DATA');
 				} else {
 					this.setState({ media: res.data });
 				}

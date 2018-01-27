@@ -11,28 +11,30 @@ const SERVERURL	= 'https://isolutions.fm';
 const APITOKEN	= '/fmi/rest/api';
 const DB		= 'RideAlong';
 
-let LAYOUT		= "Home";
-// let LAYOUT		= "User";
-// router.use(authenticate);
+let LAYOUT		= "Roles";
+// let LAYOUT		= "Home";
 
-// const SERVERURL	= 'https://itools.isolutions.fm';
-// const DB		= 'TimeTracker';
-
-/* GET users listing. */
-// router.use(authenticate);
 
 router.get('/', (req, res, next) => {
-	console.log('addding roooles');
 	let request = JSON.parse(localStorage.getItem('axios_token'));
-	request.method = 'put';
-	request.url = `${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}/${req.recordId}`;
+	request.method = 'post';
+	request.url = `${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}`;
 	request.data = {
 		"data" : {
-			// "roles::role": req.role,
-			"Roles::Role": req.role,
-			// "CustomerName": "changedAlina"
+			"Role": req.role,
+			"_fkCustomersID": req.customerId
 		}
 	};
+	// let request = JSON.parse(localStorage.getItem('axios_token'));
+	// request.method = 'put';
+	// request.url = `${SERVERURL}${APITOKEN}/record/${DB}/${LAYOUT}/${req.recordId}`;
+	// request.data = {
+	// 	"data" : {
+	// 		// "roles::role": req.role,
+	// 		"Roles::Role": req.role,
+	// 		// "CustomerName": "changedAlina"
+	// 	}
+	// };
 	axios(request)
 			 .then(data => data.data)
 			 .then(data => res.json(data))

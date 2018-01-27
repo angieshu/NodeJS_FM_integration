@@ -10,6 +10,7 @@ var customers = require('./routes/customers');
 var addCustomer = require('./routes/addCustomer');
 var addRole = require('./routes/addRole');
 var customerInfo = require('./routes/customerInfo');
+var findCustomer = require('./routes/findCustomer');
 var customerMedia = require('./routes/customerMedia');
 var auth = require('./routes/auth');
 
@@ -33,16 +34,27 @@ app.use('/addCustomer/:name/:division', (req, res, next) => {
 	next();
 }, addCustomer);
 
-app.use('/addRole/:recordId/:role', (req, res, next) => {
-	req.recordId = req.params.recordId;
+app.use('/addRole/:customerId/:role', (req, res, next) => {
+	req.customerId = req.params.customerId;
 	req.role = req.params.role;
 	next();
 }, addRole);
+
+// app.use('/addRole/:recordId/:role', (req, res, next) => {
+// 	req.recordId = req.params.recordId;
+// 	req.role = req.params.role;
+// 	next();
+// }, addRole);
 
 app.use('/customers/:recordId', (req, res, next) => {
 	req.recordId = req.params.recordId;
 	next();
 }, customerInfo);
+
+app.use('/customers/find/:customerName', (req, res, next) => {
+	req.customerName = req.params.customerName;
+	next();
+}, findCustomer);
 
 app.use('/customers/:recordId/media/:customerId', (req, res, next) => {
 	req.customerId = req.params.customerId;

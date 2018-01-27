@@ -25,6 +25,10 @@ class Customer extends Component {
 			});
 	}
 
+	// noData() {
+	// 	this.props.history.push('/login');
+	// }
+
 	render() {
 		if (Object.keys(this.state.info).length !== 0)
 			console.log(`${this.props.match.url}/media/${this.state.info[0].fieldData.__pkCustomerID}`);

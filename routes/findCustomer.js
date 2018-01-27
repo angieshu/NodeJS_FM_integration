@@ -8,7 +8,7 @@ const SERVERURL	= 'https://isolutions.fm';
 const APITOKEN	= '/fmi/rest/api';
 const DB		= 'RideAlong';
 
-let LAYOUT		= "Home";
+let LAYOUT		= "Customers";
 // let LAYOUT		= "User";
 
 // const SERVERURL	= 'https://itools.isolutions.fm';

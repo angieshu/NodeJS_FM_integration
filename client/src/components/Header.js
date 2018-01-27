@@ -33,7 +33,8 @@ class Header extends Component {
 	onCancel() {
 		this.setState({
 			openAddCustomer: false,
-			step: 1
+			step: 1,
+			roles: []
 		});
 	}
 
@@ -42,9 +43,21 @@ class Header extends Component {
 			alert("Please fill out all fields!");
 			return ;
 		} else if (this.state.step === 1) {
-			this.newCustomer.name = document.getElementById('newCustName').value;
-			this.newCustomer.division = document.getElementById('newCustDiv').value;
-			this.setState({ step: 2 });
+			/** Check if customer exists **/
+
+			fetch(encodeURI(`/customers/find/${document.getElementById('newCustName').value}`))
+				.then(res => res.json())
+				.then(res => {
+					if (!res.error) {
+						alert('Customer with this name already exists. Please choose a different name!');
+					} else {
+						this.newCustomer.name = document.getElementById('newCustName').value;
+						this.newCustomer.division = document.getElementById('newCustDiv').value;
+						document.getElementById('newCustName').value = "";
+						document.getElementById('newCustDiv').value = "";
+						this.setState({ step: 2 });
+					}
+				});
 		} else if (this.state.step === 2 && this.state.roles.length === 0) {
 			alert("Please add roles!");
 			return ;
@@ -52,13 +65,25 @@ class Header extends Component {
 			fetch(encodeURI(`/addCustomer/${this.newCustomer.name}/${this.newCustomer.division}`))
 				.then(res => res.json())
 				.then(res => {
-					// console.log(res);
-					this.state.roles.map(role => fetch(`/addRole/${res.recordId}/${role}`)
-													.then(res => res.json())
-													.then(res => { console.log(res); }))
-					this.onCancel();
-					this.props.newCustomerAdded();
-				})
+					if (res.error) {
+						alert('Unable to add a new customer. Please try again.');
+					} else {
+
+						/** Find out new customer's id and add roles one by one**/
+
+						fetch(encodeURI(`/customers/find/${this.newCustomer.name}`))
+							.then(res => res.json())
+							.then(res => res.data[0].fieldData.__pkCustomerID)
+							.then(customerID => {
+								console.log(customerID);
+								this.state.roles.map(role => fetch(`/addRole/${customerID}/${role}`)
+									.then(res => res.json())
+									.then(res => { console.log(res); }))
+								this.onCancel();
+								this.props.newCustomerAdded();
+							})
+					}
+				});
 		}
 
 	}
