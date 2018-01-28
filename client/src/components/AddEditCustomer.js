@@ -24,7 +24,6 @@ class AddEditCustomer extends Component {
 		if (this.props.info !== undefined) {
 			fetch(`/roles/find/${this.props.info.fieldData.__pkCustomerID}`)
 				.then(res => res.json())
-				// .then(res => { console.log(res.data); })
 				.then(res => { this.setState({rolesFetched: res.data});});
 		}
 	}
@@ -99,7 +98,6 @@ class AddEditCustomer extends Component {
 	addRoles(rolesToAdd, customerId) {
 		rolesToAdd.map(role => fetch(`/addRole/${customerId}/${role}`)
 			.then(res => res.json()));
-			// .then(res => { console.log(res); }))
 		this.onCancel();
 		this.props.newCustomerAdded();
 	}
@@ -121,7 +119,10 @@ class AddEditCustomer extends Component {
 
 	editCustomer() {
 		fetch(`/editCustomer/${this.props.info.recordId}/${this.newCustomer.name}/${this.newCustomer.division}`)
-			.then(() => this.props.onCustomerUpdated());
+			.then(() => {
+				this.onCancel();
+				this.props.onCustomerUpdated();
+			});
 	}
 
 	render() {

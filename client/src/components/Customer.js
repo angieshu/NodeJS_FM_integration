@@ -15,6 +15,7 @@ class Customer extends Component {
 
 	componentDidMount() {
 		this.getData();
+
 	}
 
 	getData() {
@@ -29,13 +30,11 @@ class Customer extends Component {
 			});
 	}
 
-	// noData() {
-	// 	this.props.history.push('/login');
-	// }
+	onCustomerUpdated() {
+		this.getData();
+	}
 
 	render() {
-		if (Object.keys(this.state.info).length !== 0)
-			console.log(`${this.props.match.url}/media/${this.state.info[0].fieldData.__pkCustomerID}`);
 		return (
 			<div className="Customer">
 				{ (Object.keys(this.state.info).length === 0) ?
@@ -45,8 +44,8 @@ class Customer extends Component {
 							name={this.state.info[0].fieldData.CustomerName}
 							page={2}
 							goLogin={() => this.props.history.push('/login')}
-							info={this.state.info[0]}
-							onCustomerUpdated={() => this.getData.bind(this)} />
+							onCustomerUpdated={() => this.onCustomerUpdated.bind(this)}
+							info={this.state.info[0]} />
 						<div className="customer-body">
 							<p className="customer-info">Info</p>
 							<p className="customer-label">Name</p>

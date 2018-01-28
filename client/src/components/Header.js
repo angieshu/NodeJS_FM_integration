@@ -50,6 +50,7 @@ class Header extends Component {
 
 	render() {
 		let currPage = this.props.page;
+
 		return (
 			<MuiThemeProvider>
 				<div>
@@ -58,7 +59,7 @@ class Header extends Component {
 						<div>
 							{(currPage === 1) ?
 								<button className="menu-links" onClick={this.onOpenAddCustomer.bind(this)}>Add Customer</button> :
-								<button className="menu-links" onClick={this.onOpenAddCustomer.bind(this)}>Edit Customer</button> 
+								<button className="menu-links" onClick={this.onOpenAddCustomer.bind(this)}>Edit Customer</button>
 							}
 							<button className="menu-pipe">|</button>
 							<button className="menu-links" onClick={this.onSignOut.bind(this)}>Sign Out</button>
@@ -68,7 +69,8 @@ class Header extends Component {
 						onCancel={this.onCancel.bind(this)}
 						openDialog={this.state.openDialog}
 						newCustomerAdded={() =>this.props.newCustomerAdded()}
-						info={this.props.info} />
+						info={this.props.info}
+						onCustomerUpdated={this.props.onCustomerUpdated()} />
 				</div>
 			</MuiThemeProvider>
 		);

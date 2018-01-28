@@ -38,7 +38,8 @@ class App extends Component {
 
 
 	newCustomerAdded() {
-		this.getCustomers();
+		// this.getCustomers();
+		console.log('in the app');
 	}
 
 	render() {
@@ -48,8 +49,7 @@ class App extends Component {
 					<Header name="Customers"
 						page={1}
 						newCustomerAdded={this.newCustomerAdded.bind(this)}
-						goLogin={() => this.props.history.push('/login')}
-						onCustomerUpdated={() => {console.log('here');}} />
+						goLogin={() => this.props.history.push('/login')} />
 					<div className="customers-body">
 						{this.state.customers.map(customer =>
 							<Link key={customer.recordId} to={{ pathname: `/customers/${customer.recordId}` }}>
