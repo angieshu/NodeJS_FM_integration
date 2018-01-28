@@ -24,7 +24,7 @@ class AddEditCustomer extends Component {
 		if (this.props.info !== undefined) {
 			fetch(`/roles/find/${this.props.info.fieldData.__pkCustomerID}`)
 				.then(res => res.json())
-				// .then(res => { console.log(res.data); });
+				// .then(res => { console.log(res.data); })
 				.then(res => { this.setState({rolesFetched: res.data});});
 		}
 	}
@@ -44,19 +44,22 @@ class AddEditCustomer extends Component {
 			return ;
 		} else if (this.state.step === 1) {
 			/** Check if customer exists **/
+			this.newCustomer.name = document.getElementById('newCustName').value;
+			this.newCustomer.division = document.getElementById('newCustDiv').value;
 			if (this.props.info === undefined ||
-				(this.props.info !== undefined && (document.getElementById('newCustName').value !== this.props.info.fieldData.CustomerName) ||
-				document.getElementById('newCustDiv').value !== this.props.info.fieldData.Division)) {
-					this.newCustomer.name = document.getElementById('newCustName').value;
-					this.newCustomer.division = document.getElementById('newCustDiv').value;
-					this.findCustomer(1);
+				(this.props.info !== undefined && document.getElementById('newCustName').value !== this.props.info.fieldData.CustomerName)) {
+				this.findCustomer(1);
+			} else if (this.props.info !== undefined && document.getElementById('newCustName').value === this.props.info.fieldData.CustomerName) {
+				this.setState({ step: 2 });
 			}
 		} else if ((this.state.step === 2 && this.state.roles.length === 0) ||
 					(this.state.step === 2 && this.props.info !== undefined && this.state.rolesFetched === 0)) {
 			alert("Please add roles!");
 			return ;
-		} else if (this.state.step === 2) {
+		} else if (this.state.step === 2 && this.props.info === undefined) {
 			this.addCustomer();
+		} else if (this.state.step === 2) {
+			this.editCustomer();
 		}
 
 	}
@@ -114,6 +117,11 @@ class AddEditCustomer extends Component {
 					this.findCustomer(2);
 				}
 			});
+	}
+
+	editCustomer() {
+		fetch(`/editCustomer/${this.props.info.recordId}/${this.newCustomer.name}/${this.newCustomer.division}`)
+			.then(() => this.props.onCustomerUpdated());
 	}
 
 	render() {

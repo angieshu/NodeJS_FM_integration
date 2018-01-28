@@ -14,6 +14,10 @@ class Customer extends Component {
 	}
 
 	componentDidMount() {
+		this.getData();
+	}
+
+	getData() {
 		fetch(encodeURI(`${this.props.match.url}`))
 			.then(res => res.json())
 			.then(res => {
@@ -41,7 +45,8 @@ class Customer extends Component {
 							name={this.state.info[0].fieldData.CustomerName}
 							page={2}
 							goLogin={() => this.props.history.push('/login')}
-							info={this.state.info[0]} />
+							info={this.state.info[0]}
+							onCustomerUpdated={() => this.getData.bind(this)} />
 						<div className="customer-body">
 							<p className="customer-info">Info</p>
 							<p className="customer-label">Name</p>
