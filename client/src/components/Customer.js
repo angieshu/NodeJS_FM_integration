@@ -37,20 +37,24 @@ class Customer extends Component {
 				{ (Object.keys(this.state.info).length === 0) ?
 					("") : (
 					<div>
-						<Header name={this.state.info[0].fieldData.CustomerName} page={2} />
+						<Header
+							name={this.state.info[0].fieldData.CustomerName}
+							page={2}
+							goLogin={() => this.props.history.push('/login')}
+							info={this.state.info[0]} />
 						<div className="customer-body">
-						<p className="customer-info">Info</p>
-						<p className="customer-label">Name</p>
-						<p className="customer-descr">{ this.state.info[0].fieldData.CustomerName }</p>
-						<br />
-						<p className="customer-label">Division</p>
-						<p className="customer-descr">{ this.state.info[0].fieldData.Division }</p>
-						<br />
-						<p className="customer-label">Roles</p>
-						<p className="customer-descr">{ this.state.info[0].fieldData.RolesDisplay }</p>
-						<br />
-						<br />
-						<Media path={`${this.props.match.url}/media/${this.state.info[0].fieldData.__pkCustomerID}`} />
+							<p className="customer-info">Info</p>
+							<p className="customer-label">Name</p>
+							<p className="customer-descr">{ this.state.info[0].fieldData.CustomerName }</p>
+							<br />
+							<p className="customer-label">Division</p>
+							<p className="customer-descr">{ this.state.info[0].fieldData.Division }</p>
+							<br />
+							<p className="customer-label">Roles</p>
+							<p className="customer-descr">{ this.state.info[0].fieldData.RolesDisplay }</p>
+							<br />
+							<br />
+							<Media path={`${this.props.match.url}/media/${this.state.info[0].fieldData.__pkCustomerID}`} />
 						</div>
 					</div>
 				)}

@@ -11,8 +11,10 @@ var addCustomer = require('./routes/addCustomer');
 var addRole = require('./routes/addRole');
 var customerInfo = require('./routes/customerInfo');
 var findCustomer = require('./routes/findCustomer');
+var findRoles = require('./routes/findRoles');
 var customerMedia = require('./routes/customerMedia');
 var auth = require('./routes/auth');
+var logout = require('./routes/logout');
 
 var app = express();
 
@@ -56,17 +58,18 @@ app.use('/customers/find/:customerName', (req, res, next) => {
 	next();
 }, findCustomer);
 
+app.use('/roles/find/:customerId', (req, res, next) => {
+	req.customerId = req.params.customerId;
+	next();
+}, findRoles);
+
 app.use('/customers/:recordId/media/:customerId', (req, res, next) => {
 	req.customerId = req.params.customerId;
 	next();
 }, customerMedia);
 
 app.use('/auth', auth);
-// app.post('/auth', (req, res) => {
-// 	console.log(req.body);
-// 	req.accountName = req.body.accountName;
-// 	req.accountPassword = req.body.accountPassword;
-// });
+app.use('/logout', logout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

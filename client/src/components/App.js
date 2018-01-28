@@ -45,7 +45,10 @@ class App extends Component {
 		return (
 			<MuiThemeProvider>
 				<div className="App">
-					<Header name="Customers" page={1} newCustomerAdded={this.newCustomerAdded.bind(this)} />
+					<Header name="Customers"
+						page={1}
+						newCustomerAdded={this.newCustomerAdded.bind(this)}
+						goLogin={() => this.props.history.push('/login')} />
 					<div className="customers-body">
 						{this.state.customers.map(customer =>
 							<Link key={customer.recordId} to={{ pathname: `/customers/${customer.recordId}` }}>
