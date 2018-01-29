@@ -109,6 +109,7 @@ class AddEditCustomer extends Component {
 				if (this.props.info !== undefined) {
 					this.props.onCustomerUpdated();
 				} else {
+					console.log('in add roles');
 					this.props.newCustomerAdded();
 				}
 	}

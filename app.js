@@ -15,6 +15,7 @@ var customerInfo = require('./routes/customerInfo');
 var findCustomer = require('./routes/findCustomer');
 var findRoles = require('./routes/findRoles');
 var customerMedia = require('./routes/customerMedia');
+var deleteCustomer = require('./routes/deleteCustomer');
 var auth = require('./routes/auth');
 var logout = require('./routes/logout');
 
@@ -55,6 +56,11 @@ app.use('/removeRole/:recordId', (req, res, next) => {
 	req.recordId = req.params.recordId;
 	next();
 }, removeRole);
+
+app.use('/deleteCustomer/:recordId', (req, res, next) => {
+	req.recordId = req.params.recordId;
+	next();
+}, deleteCustomer);
 
 app.use('/customers/:recordId', (req, res, next) => {
 	req.recordId = req.params.recordId;

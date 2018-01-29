@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
 
 import '../css/Header.css';
 

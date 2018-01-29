@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-
 import '../css/App.css';
 
 import Header from './Header';
 
 import rightArrow from '../img/right-arrow.png';
-import menu from '../img/menu.png';
 
 class App extends Component {
 	state = {
@@ -38,8 +36,7 @@ class App extends Component {
 
 
 	newCustomerAdded() {
-		// this.getCustomers();
-		console.log('in the app');
+		this.getCustomers();
 	}
 
 	render() {
@@ -50,14 +47,14 @@ class App extends Component {
 						page={1}
 						newCustomerAdded={this.newCustomerAdded.bind(this)}
 						goLogin={() => this.props.history.push('/login')}
-						onCustomerUpdated={() => {console.log('here');}} />
+						onCustomerUpdated={() => {console.log('');}} />
 					<div className="customers-body">
 						{this.state.customers.map(customer =>
 							<Link key={customer.recordId} to={{ pathname: `/customers/${customer.recordId}` }}>
 								<div>
 									<button key={customer.recordId} className="customer">
 										{customer.fieldData.CustomerName}
-										<img src={rightArrow} />
+										<img src={rightArrow} alt=""/>
 									</button>
 								</div>
 								<br />

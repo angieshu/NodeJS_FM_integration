@@ -21,6 +21,7 @@
 
 .customer:hover {
 	background-color: #FAFAFA;
+	color: #00B8D4;
 	border-color: #00B8D4;
 	border-radius: .4em;
 	-moz-border-radius: .4em;

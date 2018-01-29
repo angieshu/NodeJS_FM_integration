@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { fadeIn, pulse } from 'react-animations';
 import Radium, {StyleRoot} from 'radium';
 
