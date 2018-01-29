@@ -49,7 +49,8 @@ class App extends Component {
 					<Header name="Customers"
 						page={1}
 						newCustomerAdded={this.newCustomerAdded.bind(this)}
-						goLogin={() => this.props.history.push('/login')} />
+						goLogin={() => this.props.history.push('/login')}
+						onCustomerUpdated={() => {console.log('here');}} />
 					<div className="customers-body">
 						{this.state.customers.map(customer =>
 							<Link key={customer.recordId} to={{ pathname: `/customers/${customer.recordId}` }}>

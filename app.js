@@ -10,6 +10,7 @@ var customers = require('./routes/customers');
 var editCustomer = require('./routes/editCustomer');
 var addCustomer = require('./routes/addCustomer');
 var addRole = require('./routes/addRole');
+var removeRole = require('./routes/removeRole');
 var customerInfo = require('./routes/customerInfo');
 var findCustomer = require('./routes/findCustomer');
 var findRoles = require('./routes/findRoles');
@@ -49,6 +50,11 @@ app.use('/addRole/:customerId/:role', (req, res, next) => {
 	req.role = req.params.role;
 	next();
 }, addRole);
+
+app.use('/removeRole/:recordId', (req, res, next) => {
+	req.recordId = req.params.recordId;
+	next();
+}, removeRole);
 
 app.use('/customers/:recordId', (req, res, next) => {
 	req.recordId = req.params.recordId;

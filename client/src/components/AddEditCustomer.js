@@ -4,6 +4,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 
+import '../css/AddEditCustomer.css';
+
+import removeIcon from '../img/remove-sign.png';
+
 class AddEditCustomer extends Component {
 	state = {
 		openAddCustomer: false,
@@ -15,7 +19,6 @@ class AddEditCustomer extends Component {
 	constructor() {
 		super();
 		this.newCustomer = {};
-		this.changes = {};
 		this.rolesToDelete = [];
 	}
 
@@ -32,8 +35,10 @@ class AddEditCustomer extends Component {
 		this.setState({
 			openAddCustomer: false,
 			step: 1,
-			roles: []
+			roles: [],
+			rolesFetched: [],
 		});
+		this.rolesToDelete = [];
 		this.props.onCancel();
 	}
 
@@ -51,8 +56,8 @@ class AddEditCustomer extends Component {
 			} else if (this.props.info !== undefined && document.getElementById('newCustName').value === this.props.info.fieldData.CustomerName) {
 				this.setState({ step: 2 });
 			}
-		} else if ((this.state.step === 2 && this.state.roles.length === 0) ||
-					(this.state.step === 2 && this.props.info !== undefined && this.state.rolesFetched === 0)) {
+		} else if ((this.state.step === 2 && this.state.roles.length === 0 && this.props.info === undefined) ||
+					(this.state.step === 2 && this.props.info !== undefined && this.state.rolesFetched === 0 && this.state.roles)) {
 			alert("Please add roles!");
 			return ;
 		} else if (this.state.step === 2 && this.props.info === undefined) {
@@ -67,17 +72,19 @@ class AddEditCustomer extends Component {
 		e.preventDefault();
 		if (document.getElementById('newRole').value !== "") {
 			let roles = this.state.roles;
-			if (roles.filter(role => role === document.getElementById('newRole').value).length !== 0) {
+			let rolesFetched = this.state.rolesFetched;
+			if (roles.filter(role => role === document.getElementById('newRole').value).length !== 0 ||
+				rolesFetched.filter(role => role.fieldData.Role === document.getElementById('newRole').value).length !== 0) {
 				alert("Role has been already added!");
 			} else {
-				roles.unshift(document.getElementById('newRole').value);
-				this.setState({ roles });
+				roles.push(document.getElementById('newRole').value);
+				this.setState({ roles: roles });
 				document.getElementById('newRole').value = "";
 			}
 		}
 	}
 
-	/** fetchFlag: 1 - check, 2 - add roles, 3 - edit roles **/
+	/** fetchFlag: 1 - check, 2 - add roles **/
 
 	findCustomer(fetchFlag) {
 		fetch(encodeURI(`/customers/find/${this.newCustomer.name}`))
@@ -90,16 +97,20 @@ class AddEditCustomer extends Component {
 					document.getElementById('newCustDiv').value = "";
 					this.setState({ step: 2 });
 				} else if (fetchFlag === 2) {
-					this.addRoles(this.state.roles,res.data[0].fieldData.__pkCustomerID);
+					this.addRoles(res.data[0].fieldData.__pkCustomerID);
 				}
 			});
 	}
 
-	addRoles(rolesToAdd, customerId) {
-		rolesToAdd.map(role => fetch(`/addRole/${customerId}/${role}`)
-			.then(res => res.json()));
-		this.onCancel();
-		this.props.newCustomerAdded();
+	addRoles(customerId) {
+		this.state.roles.map(role =>
+			fetch(`/addRole/${customerId}/${role}`));
+				this.onCancel();
+				if (this.props.info !== undefined) {
+					this.props.onCustomerUpdated();
+				} else {
+					this.props.newCustomerAdded();
+				}
 	}
 
 	addCustomer() {
@@ -120,9 +131,30 @@ class AddEditCustomer extends Component {
 	editCustomer() {
 		fetch(`/editCustomer/${this.props.info.recordId}/${this.newCustomer.name}/${this.newCustomer.division}`)
 			.then(() => {
-				this.onCancel();
-				this.props.onCustomerUpdated();
-			});
+				this.rolesToDelete.map(role => {
+					fetch(`/removeRole/${role}`)
+						.then(res => res.json())
+				});
+			})
+			.then(() => {
+				this.findCustomer(2);
+			})
+
+	}
+
+/** array flag: 1 --> remove from this.state.roles, 2 --> remove from this.state.rolesFetched **/
+
+	onRemoveRole(index, arrayFlag) {
+		if (arrayFlag === 2) {
+			this.rolesToDelete.push(this.state.rolesFetched[index].recordId);
+			let roles = this.state.rolesFetched;
+			roles.splice(index, 1);
+			this.setState({ rolesFetched: roles });
+		} else {
+			let roles = this.state.roles;
+			roles.splice(index, 1);
+			this.setState({ roles });
+		}
 	}
 
 	render() {
@@ -140,7 +172,7 @@ class AddEditCustomer extends Component {
 
 		return (
 			<MuiThemeProvider>
-				<div>
+				<div className='addEdtCustomer'>
 					<Dialog
 						title="Add Customer"
 						modal={true}
@@ -182,11 +214,22 @@ class AddEditCustomer extends Component {
 											floatingLabelStyle={{ color: `#383838` }} />
 										<button onClick={this.onAddRole.bind(this)}>Add Role</button>
 									</div>
-									{this.state.roles.map(role =>
-										<div key={role}>{role}</div>
+									<br />
+									{this.state.roles.reverse().map((role, index) =>
+										<div key={index}>
+											{role}
+											<button className='remove-role' onClick={() => this.onRemoveRole(index, 1)}>
+												<img src={removeIcon} />
+											</button>
+										</div>
 									)}
-									{this.state.rolesFetched.map(role =>
-										<div key={role}>{role.fieldData.Role}</div>
+									{this.state.rolesFetched.reverse().map((role, index) =>
+										<div key={index}>
+											{role.fieldData.Role}
+											<button className='remove-role' onClick={() => this.onRemoveRole(index, 2)}>
+												<img src={removeIcon} />
+											</button>
+										</div>
 									)}
 								</div>}
 					</Dialog>
