@@ -15,25 +15,29 @@ const styles = {
 
 class Image extends Component {
 	render() {
-		let assets = this.props.assets;
 		let category = this.props.category;
+		let assets = this.props.assets.filter(asses => asses.fieldData.Category === category);
 		return (
 			<MuiThemeProvider>
-				<br />
-				<p className="assetCategory">{category}</p>
-				<br />
-				<div className="assetsRoot">
-					<GridList cellHeight={140} style={styles.gridList} cols={4}>
-						{ assets.filter(asset => asset.fieldData.Category === category).map(asset =>
-							<GridTile
-							key={asset.recordId}
-							title={asset.fieldData.SubCategory}
-							subtitle={asset.fieldData.Notes}>
-								<img src={asset.fieldData.Media} alt=""/>
-							</GridTile>
-						)}
-					</GridList>
-				</div>
+				{(assets.length === 0) ? "" :
+					<div>
+						<br />
+						<p className="assetCategory">{category}</p>
+						<br />
+						<div className="assetsRoot">
+							<GridList cellHeight={140} style={styles.gridList} cols={4}>
+								{ assets.map(asset =>
+									<GridTile
+									key={asset.recordId}
+									title={asset.fieldData.SubCategory}
+									subtitle={asset.fieldData.Notes}>
+										<img src={asset.fieldData.Media} alt=""/>
+									</GridTile>
+								)}
+							</GridList>
+						</div>
+					</div>
+				}
 				<br /><br /><br />
 			</MuiThemeProvider>
 		);

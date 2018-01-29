@@ -2,3 +2,8 @@
 	width: 10px;
 	height: 10px;
 }
+
+.remove-role {
+	border-color: none;
+	border-width: 0px;
+}

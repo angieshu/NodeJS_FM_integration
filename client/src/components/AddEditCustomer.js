@@ -5,6 +5,7 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 
 import '../css/AddEditCustomer.css';
+import '../css/Customer.css';
 
 import removeIcon from '../img/remove-sign.png';
 
@@ -160,8 +161,8 @@ class AddEditCustomer extends Component {
 
 	render() {
 		let actions = [
-			<button onClick={this.onCancel.bind(this)}>Cancel</button>,
-			<button onClick={this.onSubmitAddCust.bind(this)}>Submit</button>
+			<button className='secondary-btn' onClick={this.onCancel.bind(this)}>Cancel</button>,
+			<button className='primary-btn' onClick={this.onSubmitAddCust.bind(this)}>Submit</button>
 		];
 
 		let name = "";
@@ -213,7 +214,7 @@ class AddEditCustomer extends Component {
 											underlineStyle={{ borderColor: `#383838` }}
 											underlineFocusStyle={{ display: `none` }}
 											floatingLabelStyle={{ color: `#383838` }} />
-										<button onClick={this.onAddRole.bind(this)}>Add Role</button>
+										<button className='primary-btn' onClick={this.onAddRole.bind(this)}>Add Role</button>
 									</div>
 									<br />
 									{this.state.roles.reverse().map((role, index) =>

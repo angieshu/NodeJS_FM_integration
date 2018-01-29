@@ -22,7 +22,6 @@ class Media extends Component {
 	render() {
 		return (
 			<div>
-			<p className="mediaGallery">Media Gallery</p>
 			<Image assets={this.state.media} category="Paper & Stationary"/>
 			<Image assets={this.state.media} category="Checklist & Forms"/>
 			<Image assets={this.state.media} category="Data Display"/>

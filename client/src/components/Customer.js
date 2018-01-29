@@ -61,8 +61,8 @@ class Customer extends Component {
 
 	render() {
 		let actions = [
-			<button onClick={this.onCancel.bind(this)}>Cancel</button>,
-			<button onClick={this.onSubmitDeleteCust.bind(this)}>Submit</button>
+			<button className='secondary-btn' onClick={this.onCancel.bind(this)}>Cancel</button>,
+			<button className='primary-btn' onClick={this.onSubmitDeleteCust.bind(this)}>Submit</button>
 		];
 
 		return (
@@ -77,22 +77,36 @@ class Customer extends Component {
 								goLogin={() => this.props.history.push('/login')}
 								onCustomerUpdated={() => this.onCustomerUpdated.bind(this)}
 								info={this.state.info[0]} />
-							<div className="customer-body">
-								<p className="customer-info">
-									Info
-									<button onClick={this.onDeleteCustomer.bind(this)}>Delete Customer</button>
-								</p>
-								<p className="customer-label">Name</p>
-								<p className="customer-descr">{ this.state.info[0].fieldData.CustomerName }</p>
-								<br />
-								<p className="customer-label">Division</p>
-								<p className="customer-descr">{ this.state.info[0].fieldData.Division }</p>
-								<br />
-								<p className="customer-label">Roles</p>
-								<p className="customer-descr">{ this.state.info[0].fieldData.RolesDisplay }</p>
-								<br />
-								<br />
-								<Media path={`${this.props.match.url}/media/${this.state.info[0].fieldData.__pkCustomerID}`} />
+							<div>
+								<div className='customer-header'>
+									<p className="customer-info">
+										Info
+									</p>
+								</div>
+								<div className='customer-body'>
+									<div className='customer-body-header'>
+									</div>
+									<p className="customer-label">Name</p>
+									<p className="customer-descr">{ this.state.info[0].fieldData.CustomerName }</p>
+									<br />
+									<p className="customer-label">Division</p>
+									<p className="customer-descr">{ this.state.info[0].fieldData.Division }</p>
+									<br />
+									<p className="customer-label">Roles</p>
+									<p className="customer-descr">{ this.state.info[0].fieldData.RolesDisplay }</p>
+									<br />
+									<button className='delete-btn' onClick={this.onDeleteCustomer.bind(this)}>Delete Customer</button>
+									<br />
+									<br />
+								</div>
+								<div className='customer-header'>
+									<p className="mediaGallery">
+									Media Gallery
+									</p>
+								</div>
+								<div className='customer-body'>
+									<Media path={`${this.props.match.url}/media/${this.state.info[0].fieldData.__pkCustomerID}`} />
+								</div>
 							</div>
 						</div>
 					)}
